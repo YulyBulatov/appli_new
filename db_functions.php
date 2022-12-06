@@ -23,9 +23,8 @@ function findAll(){
 
         $stmt = $db->prepare("SELECT * FROM appli");
         $stmt->execute();
-        foreach($stmt as $row){
-            print_r($row);
-        }
+     
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     
 
 }
