@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 function connexion()
 {
@@ -51,9 +52,9 @@ function insertProduct($name, $descr, $price){
         $stmt->bindValue(':price', $price);
         $stmt->execute();
         $id_produit = $db->lastInsertId();
-        $message ="Le produit id ".$id_produit." a été ajouté"; 
-
-        echo $message;
+        $_SESSION["id"] =$id_produit;
+        $message ="Le produit id ".$id_produit." a été ajouté";
+        $_SESSION["message"]=$message;
 
 }
 

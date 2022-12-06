@@ -16,7 +16,7 @@
 
         <h1>Ajouter un produit</h1>
 
-        <form action="traitement.php?action=add" method="post">
+        <form action="traitement.php?action=add_new" method="post">
             <p>
                 <label>
                     Nom de produit :
@@ -31,8 +31,8 @@
             </p>
             <p>
                 <label>
-                    Quantité désirée :
-                    <input type="number" name="qtt" value="1">
+                    Description :
+                    <textarea name="desc"></textarea>
                 </label>
             </p>
             <p>

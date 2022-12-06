@@ -31,15 +31,16 @@
                     "<tbody>";
             $totalGeneral = 0;
             foreach($_SESSION['products'] as $index => $product){
+                $total = $product["price"]*$product["qtt"];
                 echo "<tr>",
                         "<td>".$index."</td>",
                         "<td>".$product['name']."</td>",
                         "<td>".number_format($product['price'], 2, ",", "&nbsp;")."&nbsp;€</td>",
                         "<td><a class='btn btn-primary btn-sm ' href='/appli_new/traitement.php?action=qtt_up&id=$index' role='button'>+</a> ".$product['qtt']."<a class='btn btn-primary btn-sm ' href='/appli_new/traitement.php?action=qtt_down&id=$index' role='button'>-</a></td>",
-                        "<td>".number_format($product['total'], 2, ",", "&nbsp;")."&nbsp;€</td>",
+                        "<td>".number_format($total, 2, ",", "&nbsp;")."&nbsp;€</td>",
                         "<td><a class='btn btn-primary btn-sm ' href='/appli_new/traitement.php?action=delete&id=$index' role='button'>Supprimer</a></td>",
                     "</tr>";
-                $totalGeneral+=$product['total'];
+                $totalGeneral+=$total;
             }
             echo "<tr>",
                     "<td colspan=4>Total général : </td>",

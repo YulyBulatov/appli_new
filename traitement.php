@@ -1,5 +1,6 @@
 <?php
     session_start();
+    require_once "db_functions.php";
 
     if(isset($_GET['action'])){
 
@@ -7,28 +8,49 @@
 
             case "add":
 
-                if(isset($_POST['submit'])){
+                $produits = findOneById($_GET['id']);
+                $qtt = 1;
 
-                    $name = filter_input(INPUT_POST, "name", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-                    $price = filter_input(INPUT_POST, "price", FILTER_VALIDATE_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-                    $qtt = filter_input(INPUT_POST, "qtt", FILTER_VALIDATE_INT);
-
-                    if($name && $price && $qtt){
-
+                foreach ($produits as $produit){
+                
                         $product = [
-                            "name"  => $name,
-                            "price" => $price,
+                            "name"  => $produit['name'],
+                            "price" => $produit['price'],
                             "qtt"   => $qtt,
-                            "total" => $price*$qtt
+                            "total" => $produit['price']*$qtt
                         ];
 
                     $_SESSION['products'][] = $product;
                     $_SESSION["message"] = "Produit enregistré avec succès !";
-                    }
+                    
 
                 }
 
                 header("Location:index.php");
+
+                break;
+
+
+            case "add_new":
+
+                
+
+                if(isset($_POST['submit'])){
+
+                    $name = filter_input(INPUT_POST, "name", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                    $price = filter_input(INPUT_POST, "price", FILTER_VALIDATE_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                    $desc = filter_input(INPUT_POST, "desc", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+                    if($name && $price && $desc){
+
+                        insertProduct($name, $desc, $price);
+                    }
+
+                }
+
+                $index = $_SESSION["id"];
+
+                header("Location:product.php?id=$index");
 
                 break;
 
