@@ -3,7 +3,7 @@
 function connexion()
 {
     try {
-        $db = new PDO("mysql:host=localhost;dbname=appli_new", "root", "", array(
+        $db = new PDO("mysql:host=localhost;dbname=appli_new", "root", "root", array(
             \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
             \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
             \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'
@@ -34,10 +34,10 @@ function findOneById($id){
 
     $db = connexion();
 
-        $stmt = $db->prepare("SELECT * FROM appli WHERE id=:id");
+        $stmt = $db->prepare("SELECT * FROM appli WHERE id = :id");
         $stmt->bindParam(":id", $id);
         $stmt->execute();
-        return print_r($stmt);
+        return print_r($stmt->fetchAll(PDO::FETCH_ASSOC));
     
 
 }
@@ -46,11 +46,15 @@ function insertProduct($name, $descr, $price){
 
     $db = connexion();
 
-        $stmt = $db->prepare("INSERT INTO appli (name, description, price) VALUES (name=:name, description=:descr, price=:price");
-        $stmt->bindParam(':name', $name);
-        $stmt->bindParam(':descr', $descr);
-        $stmt->bindParam(':price', $price);
+        $stmt = $db->prepare("INSERT INTO appli (name, description, price) VALUES (:name, :descr, :price)");
+        $stmt->bindValue(':name', $name);
+        $stmt->bindValue(':descr', $descr);
+        $stmt->bindValue(':price', $price);
         $stmt->execute();
+        $id_produit = $db->lastInsertId();
+        $message ="Le produit id ".$id_produit." a été ajouté"; 
+
+        echo $message;
 
 }
 

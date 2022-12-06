@@ -4,4 +4,7 @@ require_once "db_functions.php";
 
 findAll();
 
-findOneById(2);
+findOneById(3);
+
+insertProduct("Melon", "Galia, jaune", 12);
+
