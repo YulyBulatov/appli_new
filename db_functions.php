@@ -36,7 +36,7 @@ function findOneById($id){
         $stmt = $db->prepare("SELECT * FROM appli WHERE id = :id");
         $stmt->bindParam(":id", $id);
         $stmt->execute();
-        return print_r($stmt->fetchAll(PDO::FETCH_ASSOC));
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     
 
 }
